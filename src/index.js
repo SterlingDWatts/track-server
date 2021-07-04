@@ -1,25 +1,19 @@
-const express = require("express");
-// const mongoose = require("mongoose");
+const mongoose = require("mongoose");
+const app = require("./app");
 const { PORT, DATABASE_URL } = require("./config");
 
-console.log(DATABASE_URL);
+mongoose.connect(DATABASE_URL, {
+  useNewUrlParser: true,
+  useCreateIndex: true,
+  useUnifiedTopology: true,
+});
 
-// mongoose.connect(DATABASE_URL, {
-//   useNewUrlParser: true,
-//   useCreateIndex: true,
-// });
-//
-// mongoose.connection.on("connected", () => {
-//   console.log("Connected to mongo instance");
-// });
-// mongoose.connection.on("error", (err) => {
-//   console.error("Error connecting to mongo", err);
-// });
+mongoose.connection.on("connected", () => {
+  console.log("Connected to mongo instance");
+});
 
-const app = express();
-
-app.get("/", (req, res) => {
-  res.send("Hi there!");
+mongoose.connection.on("error", (err) => {
+  console.error("Error connecting to mongo", err);
 });
 
 app.listen(3000, () => {
