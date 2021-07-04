@@ -1,5 +1,8 @@
 const mongoose = require("mongoose");
+const xss = require("xss");
 const bcrypt = require("bcrypt");
+// eslint-disable-next-line no-useless-escape
+const REGEX_PASSWORD = /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&])[\S]+/;
 
 const userSchema = new mongoose.Schema({
   email: {
@@ -10,6 +13,26 @@ const userSchema = new mongoose.Schema({
   password: {
     type: String,
     required: true,
+    vailidate: [
+      {
+        validator: function (password) {
+          return password.length < 8 || password.length > 72;
+        },
+        msg: "Password must be between 8 and 72 characters.",
+      },
+      {
+        validator: function (password) {
+          return password.includes(" ");
+        },
+        msg: "Password must not include a space.",
+      },
+      {
+        validator: function (password) {
+          return !REGEX_PASSWORD.test(password);
+        },
+        msg: "Password must contain one upper case, lower case, number, and special character.",
+      },
+    ],
   },
   firstName: {
     type: String,
@@ -21,8 +44,17 @@ const userSchema = new mongoose.Schema({
   },
 });
 
+function serializeUser({ firstName, lastName, email, password }) {
+  return {
+    firstName: xss(firstName),
+    lastName: xss(lastName),
+    email: xss(email),
+    password,
+  };
+}
+
 userSchema.pre("save", function (next) {
-  const user = this;
+  const user = serializeUser(this.user);
   if (!user.isModified("password")) {
     return next();
   }

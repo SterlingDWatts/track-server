@@ -1,23 +1,14 @@
 const express = require("express");
 const jwt = require("jsonwebtoken");
 const User = require("../../models/User");
-const AuthService = require("./AuthService");
 
 const router = express.Router();
 
 router.post("/signup", async (req, res) => {
   const { email, password, firstName, lastName } = req.body;
 
-  const passwordError = AuthService.validatePassword(password);
-  if (passwordError) {
-    return res.status(400).json({
-      error: passwordError,
-    });
-  }
-
   try {
-    const serializedUser = AuthService.serializeUser({ email, password, firstName, lastName });
-    const user = new User(serializedUser);
+    const user = new User({ email, password, firstName, lastName });
     await user.save();
 
     const token = jwt.sign({ userId: user._id }, process.env.JWT_KEY);

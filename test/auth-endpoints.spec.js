@@ -27,7 +27,7 @@ describe("Auth Endpoints", function () {
 
   describe("POST /signup", function () {
     context("User validation", function () {
-      const requiredFields = ["email", "firstName", "lastName"];
+      const requiredFields = ["email", "firstName", "lastName", "password"];
       requiredFields.forEach((field) => {
         it(`responds with 422 when ${field} is missing`, function () {
           const userWithMissingField = { ...testUser };
