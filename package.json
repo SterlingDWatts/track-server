@@ -7,7 +7,6 @@
     "prettier-watch": "onchange \"**/*.js\" -- prettier --write {{changed}}",
     "test": "mocha --require test/setup.js --watch",
     "dev": "nodemon src/index.js",
-    "prepare": "husky install",
     "commit": "git-cz",
     "start": "node backend/server.js",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install npm && run build"
