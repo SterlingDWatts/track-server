@@ -16,6 +16,6 @@ mongoose.connection.on("error", (err) => {
   console.error("Error connecting to mongo", err);
 });
 
-app.listen(3000, () => {
+app.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`);
 });
