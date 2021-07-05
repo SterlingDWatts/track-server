@@ -8,7 +8,9 @@
     "test": "mocha --require test/setup.js --watch",
     "dev": "nodemon src/index.js",
     "prepare": "husky install",
-    "commit": "git-cz"
+    "commit": "git-cz",
+    "start": "node backend/server.js",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install npm && run build"
   },
   "keywords": [],
   "author": "",
@@ -45,5 +47,8 @@
     "*.{js,jsx}": [
       "eslint --fix"
     ]
+  },
+  "engines": {
+    "node": "10.16.0"
   }
 }
