@@ -8,7 +8,7 @@
     "test": "mocha --require test/setup.js --watch",
     "dev": "nodemon src/index.js",
     "commit": "git-cz",
-    "start": "node backend/server.js",
+    "start": "node src/index.js",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install && npm run build"
   },
   "keywords": [],
