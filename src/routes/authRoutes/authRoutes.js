@@ -1,14 +1,25 @@
 const express = require("express");
 const jwt = require("jsonwebtoken");
+const xss = require("xss");
 const User = require("../../models/User");
 
 const router = express.Router();
 
+function serializeUser({ firstName, lastName, email, password }) {
+  return {
+    firstName: xss(firstName),
+    lastName: xss(lastName),
+    email: xss(email),
+    password,
+  };
+}
+
 router.post("/signup", async (req, res) => {
   const { email, password, firstName, lastName } = req.body;
+  const serializedUser = serializeUser({ firstName, lastName, email, password });
 
   try {
-    const user = new User({ email, password, firstName, lastName });
+    const user = new User(serializedUser);
     await user.save();
 
     const token = jwt.sign({ userId: user._id }, process.env.JWT_KEY);

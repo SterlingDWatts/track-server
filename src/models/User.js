@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const xss = require("xss");
 const bcrypt = require("bcrypt");
 // eslint-disable-next-line no-useless-escape
 const REGEX_PASSWORD = /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&])[\S]+/;
@@ -44,17 +43,8 @@ const userSchema = new mongoose.Schema({
   },
 });
 
-function serializeUser({ firstName, lastName, email, password }) {
-  return {
-    firstName: xss(firstName),
-    lastName: xss(lastName),
-    email: xss(email),
-    password,
-  };
-}
-
 userSchema.pre("save", function (next) {
-  const user = serializeUser(this.user);
+  const user = this;
   if (!user.isModified("password")) {
     return next();
   }
