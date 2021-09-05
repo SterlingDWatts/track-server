@@ -5,35 +5,28 @@ const PokerUser = require("../../models/PokerUser");
 
 const router = express.Router();
 
-const twoHoursFromNow = () => {
-  return Math.floor(Date.now() / 1000) + 60 * 60 * 2;
-};
-
 router.post("/poker/login", async (req, res) => {
-  let { name, role } = req.body;
+  let { name, role, expDate } = req.body;
   name = xss(name);
   role = xss(role);
+  expDate = xss(expDate);
 
-  if (!name || !role) {
-    return res.status(422).send({ error: "Must provide name and role." });
+  if (!name || !role || !expDate) {
+    return res.status(422).send({ error: "Must provide name, role, and expDate." });
   }
 
   const user = await PokerUser.findOne({ name });
   if (!user) {
-    const newUser = new PokerUser({ name, role });
+    const newUser = new PokerUser({ name, role, expDate });
     await newUser.save();
 
-    const token = jwt.sign({ id: newUser._id, name, role, exp: twoHoursFromNow() }, process.env.JWT_KEY);
+    const token = jwt.sign({ id: newUser._id, name, role, expDate }, process.env.JWT_KEY);
     res.status(201).send({ token, user: newUser });
   }
 
-  const token = jwt.sign({ id: user._id, name, role, exp: twoHoursFromNow() }, process.env.JWT_KEY);
+  const token = jwt.sign({ id: user._id, name, role, expDate }, process.env.JWT_KEY);
 
-  setTimeout(() => {
-    PokerUser.deletOne({ name });
-  }, 120000);
-
-  res.status(201).send({ token, user });
+  res.status(201).send({ token, user, expDate });
 });
 
 module.exports = router;

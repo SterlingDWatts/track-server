@@ -11,6 +11,10 @@ const pokerUserSchema = new mongoose.Schema({
     required: true,
     enum: ["Front End Dev", "QAE", "Team Lead"],
   },
+  expDate: {
+    type: Date,
+    required: true,
+  },
 });
 
 module.exports = mongoose.models.PokerUser || mongoose.model("PokerUser", pokerUserSchema);
