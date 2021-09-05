@@ -8,7 +8,7 @@ const requireAuth = require("./middlewares/requireAuth");
 const authRoutes = require("./routes/authRoutes/authRoutes");
 const trackRoutes = require("./routes/trackRoutes/trackRoutes");
 const pokerLoginRoutes = require("./routes/pokerLoginRoutes/pokerLoginRoutes");
-const pokerUsersRoutes = require("./routes/pokerLoginRoutes/pokerUsersRoutes");
+const pokerUsersRoutes = require("./routes/pokerUsersRoutes/pokerUsersRoutes");
 
 const app = express();
 
