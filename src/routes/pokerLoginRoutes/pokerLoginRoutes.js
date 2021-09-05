@@ -24,7 +24,7 @@ router.post("/poker/login", async (req, res) => {
     await newUser.save();
 
     const token = jwt.sign({ id: newUser._id, name, role, exp: twoHoursFromNow() }, process.env.JWT_KEY);
-    res.status(201).send({ token, newUser });
+    res.status(201).send({ token, user: newUser });
   }
 
   const token = jwt.sign({ id: user._id, name, role, exp: twoHoursFromNow() }, process.env.JWT_KEY);
