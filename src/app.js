@@ -2,12 +2,17 @@ require("./models/User");
 require("./models/Track");
 require("dotenv").config();
 const express = require("express");
+const helmet = require("helmet");
+const cors = require("cors");
 const requireAuth = require("./middlewares/requireAuth");
 const authRoutes = require("./routes/authRoutes/authRoutes");
 const trackRoutes = require("./routes/trackRoutes/trackRoutes");
 const pokerLoginRoutes = require("./routes/pokerLoginRoutes/pokerLoginRoutes");
 
 const app = express();
+
+app.use(helmet());
+app.use(cors());
 
 app.use(express.json());
 
