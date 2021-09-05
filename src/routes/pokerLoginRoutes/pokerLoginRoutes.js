@@ -30,8 +30,8 @@ router.post("/poker/login", async (req, res) => {
   const token = jwt.sign({ id: user._id, name, role, exp: twoHoursFromNow() }, process.env.JWT_KEY);
 
   setTimeout(() => {
-    PokerUser.remove({ name });
-  }, twoHoursFromNow());
+    PokerUser.deleteOne({ name });
+  }, 120000);
 
   res.status(201).send({ token, user });
 });
