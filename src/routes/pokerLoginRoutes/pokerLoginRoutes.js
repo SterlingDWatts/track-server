@@ -24,6 +24,7 @@ router.post("/poker/login", async (req, res) => {
     res.status(201).send({ token, user: newUser });
   }
 
+  // todo possibly clean up
   user.expDate = new Date(expDate);
   user.role = role;
   user.save();
