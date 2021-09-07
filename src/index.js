@@ -6,7 +6,7 @@ const server = http.createServer(app);
 const { Server } = require("socket.io");
 const io = new Server(server, {
   cors: {
-    origin: ["https://story-point-poker.vercel.app/", "http://localhost:3000/"],
+    origin: false,
   },
 });
 
