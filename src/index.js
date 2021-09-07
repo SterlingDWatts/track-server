@@ -4,11 +4,7 @@ const { PORT, DATABASE_URL } = require("./config");
 const http = require("http");
 const server = http.createServer(app);
 const { Server } = require("socket.io");
-const io = new Server(server, {
-  cors: {
-    origin: ["http://localhost:3000", "https://story-point-poker.vercel.app/"],
-  },
-});
+const io = new Server(server);
 
 mongoose.connect(DATABASE_URL, {
   useNewUrlParser: true,
