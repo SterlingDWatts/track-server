@@ -4,12 +4,7 @@ const { PORT, DATABASE_URL } = require("./config");
 const http = require("http");
 const server = http.createServer(app);
 const { Server } = require("socket.io");
-const io = new Server(server, {
-  cors: {
-    origin: false,
-    allowedHeaders: ["my-custom-header"],
-  },
-});
+const io = new Server(server, { cors: { origin: "*" } });
 
 mongoose.connect(DATABASE_URL, {
   useNewUrlParser: true,
