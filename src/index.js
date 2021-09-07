@@ -1,6 +1,14 @@
 const mongoose = require("mongoose");
 const app = require("./app");
 const { PORT, DATABASE_URL } = require("./config");
+const http = require("http");
+const server = http.createServer(app);
+const { Server } = require("socket.io");
+const io = new Server(server, {
+  cors: {
+    origin: ["http://localhost:3000", "http://192.168.86.49:3000"],
+  },
+});
 
 mongoose.connect(DATABASE_URL, {
   useNewUrlParser: true,
@@ -16,6 +24,13 @@ mongoose.connection.on("error", (err) => {
   console.error("Error connecting to mongo", err);
 });
 
-app.listen(PORT, () => {
-  console.log(`Listening on port ${PORT}`);
+io.on("connection", (socket) => {
+  console.log("a user connected");
+  socket.on("login", () => {
+    socket.broadcast.emit("login");
+  });
+});
+
+server.listen(PORT, () => {
+  console.log(`listening on *:${PORT}`);
 });
