@@ -9,6 +9,7 @@ const authRoutes = require("./routes/authRoutes/authRoutes");
 const trackRoutes = require("./routes/trackRoutes/trackRoutes");
 const pokerLoginRoutes = require("./routes/pokerLoginRoutes/pokerLoginRoutes");
 const pokerUsersRoutes = require("./routes/pokerUsersRoutes/pokerUsersRoutes");
+const pokerStortyRoutes = require("./routes/pokerStoryRoutes/pokerStoryRoutes");
 
 const app = express();
 
@@ -19,6 +20,7 @@ app.use(express.json());
 
 app.use(pokerLoginRoutes);
 app.use(pokerUsersRoutes);
+app.use(pokerStortyRoutes);
 
 app.get("/", requireAuth, (req, res) => {
   res.send(`Your email is: ${req.user.email}`);

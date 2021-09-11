@@ -11,9 +11,10 @@ const pokerUserSchema = new mongoose.Schema({
     required: true,
     enum: ["Front End Dev", "QAE", "Team Lead"],
   },
-  expDate: {
-    type: Date,
+  isLoggedIn: {
+    type: Boolean,
     required: true,
+    default: false,
   },
 });
 
