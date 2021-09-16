@@ -7,7 +7,8 @@ router.post("/poker/points", async (req, res) => {
   const { storyId, userId, points } = req.body;
 
   if (!storyId || !userId || !points) {
-    return res.status(400).json({
+    res.header("Access-Control-Allow-Origin", "*");
+    return res.status(400).send({
       message: "Missing required fields",
     });
   }
@@ -21,6 +22,7 @@ router.post("/poker/points", async (req, res) => {
     newPokerPoints.save();
   }
 
+  res.header("Access-Control-Allow-Origin", "*");
   res.status(200).send({ message: "Poker points saved" });
 });
 
@@ -29,8 +31,10 @@ router.get("/poker/points/:storyId", async (req, res) => {
 
   const points = await PokerPoints.find({ storyId }).populate("userId");
   if (points) {
+    res.header("Access-Control-Allow-Origin", "*");
     res.status(200).send({ points });
   } else {
+    res.header("Access-Control-Allow-Origin", "*");
     res.status(404).send({ message: "No poker points found" });
   }
 });

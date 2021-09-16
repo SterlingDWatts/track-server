@@ -7,6 +7,7 @@ router.get("/poker/stories", async (_, res) => {
   let twelveHoursAgo = new Date();
   twelveHoursAgo.setHours(twelveHoursAgo.getHours() - 12);
   const stories = await PokerStory.find({ dateAdded: { $gt: twelveHoursAgo } });
+  res.header("Access-Control-Allow-Origin", "*");
   res.status(201).send({ stories });
 });
 
@@ -32,11 +33,13 @@ router.post("/poker/stories", async (req, res) => {
   const twelveHoursAgo = new Date();
   twelveHoursAgo.setHours(twelveHoursAgo.getHours() - 12);
   const recentStories = await PokerStory.find({ dateAdded: { $gt: twelveHoursAgo } });
+  res.header("Access-Control-Allow-Origin", "*");
   res.status(201).send({ stories: recentStories });
 });
 
 router.delete("/poker/stories/:id", async (req, res) => {
   await PokerStory.findByIdAndDelete(req.params.id);
+  res.header("Access-Control-Allow-Origin", "*");
   res.status(200).send({ message: "Story deleted" });
 });
 

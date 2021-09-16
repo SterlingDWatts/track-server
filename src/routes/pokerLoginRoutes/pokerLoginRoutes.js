@@ -11,6 +11,7 @@ router.post("/poker/login", async (req, res) => {
   role = xss(role);
 
   if (!name || !role || !isLoggedIn) {
+    res.header("Access-Control-Allow-Origin", "*");
     return res.status(422).send({ error: "Must provide name, role, and isLoggedIn." });
   }
 
@@ -20,6 +21,7 @@ router.post("/poker/login", async (req, res) => {
     await newUser.save();
 
     const token = jwt.sign({ _id: newUser._id, name, role, isLoggedIn }, process.env.JWT_KEY);
+    res.header("Access-Control-Allow-Origin", "*");
     res.status(201).send({ token, user: newUser });
   }
 
@@ -27,6 +29,7 @@ router.post("/poker/login", async (req, res) => {
 
   const token = jwt.sign({ _id: user._id, name, role, isLoggedIn }, process.env.JWT_KEY);
 
+  res.header("Access-Control-Allow-Origin", "*");
   res.status(200).send({ token, user });
 });
 
