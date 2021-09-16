@@ -3,11 +3,14 @@ const mongoose = require("mongoose");
 const pokerStorySchema = new mongoose.Schema({
   title: {
     type: String,
-    unique: true,
     required: true,
   },
   dateAdded: {
     type: Date,
+    required: true,
+  },
+  position: {
+    type: Number,
     required: true,
   },
 });

@@ -11,6 +11,10 @@ const pokerPointsSchema = new mongoose.Schema({
     ref: "PokerUser",
     required: true,
   },
+  points: {
+    type: String,
+    required: true,
+  },
 });
 
 module.exports = mongoose.models.PokerPoints || mongoose.model("PokerPoints", pokerPointsSchema);
