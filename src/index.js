@@ -38,11 +38,9 @@ io.on("connection", async (socket) => {
   });
 
   socket.on("disconnect", async () => {
-    try {
+    if (socket && socket.data && socket.data.user && socket.data.user.name) {
       await PokerUser.updateOne({ name: socket.data.user.name }, { isLoggedIn: false });
       socket.broadcast.emit("disconnected");
-    } catch (e) {
-      console.error(e);
     }
   });
 });

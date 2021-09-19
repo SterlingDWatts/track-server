@@ -23,10 +23,8 @@ router.post("/signup", async (req, res) => {
     await user.save();
 
     const token = jwt.sign({ userId: user._id }, process.env.JWT_KEY);
-    res.header("Access-Control-Allow-Origin", "*");
     res.status(201).send({ token });
   } catch (err) {
-    res.header("Access-Control-Allow-Origin", "*");
     return res.status(422).json({ error: err.message });
   }
 });
@@ -35,13 +33,11 @@ router.post("/signin", async (req, res) => {
   const { email, password } = req.body;
 
   if (!email || !password) {
-    res.header("Access-Control-Allow-Origin", "*");
     return res.status(422).send({ error: "Must provide email and password." });
   }
 
   const user = await User.findOne({ email });
   if (!user) {
-    res.header("Access-Control-Allow-Origin", "*");
     return res.status(422).send({ error: "Invalid password or email." });
   }
 
@@ -50,7 +46,6 @@ router.post("/signin", async (req, res) => {
     const token = jwt.sign({ userId: user._id }, process.env.JWT_KEY);
     res.send({ token });
   } catch (err) {
-    res.header("Access-Control-Allow-Origin", "*");
     return res.status(422).send({ error: "Invalid password or email." });
   }
 });

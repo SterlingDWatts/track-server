@@ -6,14 +6,12 @@ module.exports = (req, res, next) => {
   const { authorization } = req.headers;
 
   if (!authorization) {
-    res.header("Access-Control-Allow-Origin", "*");
     return res.status(401).send({ error: "You must be logged in." });
   }
 
   const token = authorization.replace("Bearer ", "");
   jwt.verify(token, process.env.JWT_KEY, async (err, payload) => {
     if (err) {
-      res.header("Access-Control-Allow-Origin", "*");
       return res.status(401).send({ error: "You must be logged in." });
     }
 
