@@ -4,7 +4,6 @@ require("dotenv").config();
 const express = require("express");
 const helmet = require("helmet");
 const cors = require("cors");
-const requireAuth = require("./middlewares/requireAuth");
 const authRoutes = require("./routes/authRoutes/authRoutes");
 const trackRoutes = require("./routes/trackRoutes/trackRoutes");
 const pokerLoginRoutes = require("./routes/pokerLoginRoutes/pokerLoginRoutes");
@@ -24,8 +23,8 @@ app.use(pokerUsersRoutes);
 app.use(pokerStortyRoutes);
 app.use(pokerPointsRoutes);
 
-app.get("/", requireAuth, (req, res) => {
-  res.send(`Your email is: ${req.user.email}`);
+app.get("/", (req, res) => {
+  res.send(`Hi!`);
 });
 app.use(authRoutes);
 app.use(trackRoutes);
