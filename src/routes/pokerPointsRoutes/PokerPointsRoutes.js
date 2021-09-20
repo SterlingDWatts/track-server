@@ -31,7 +31,7 @@ router.get("/poker/points/:storyId", async (req, res) => {
   if (points) {
     res.status(200).send({ points });
   } else {
-    res.status(404).send({ message: "No poker points found" });
+    res.status(404).send({ message: "No poker points found." });
   }
 });
 
