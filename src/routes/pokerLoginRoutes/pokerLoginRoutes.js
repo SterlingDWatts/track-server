@@ -23,7 +23,7 @@ router.post("/poker/login", async (req, res) => {
     res.status(201).send({ token, user: newUser });
   }
 
-  await PokerUser.updateOne({ name }, { isLoggedIn });
+  await PokerUser.updateOne({ name }, { isLoggedIn, role });
 
   const token = jwt.sign({ _id: user._id, name, role, isLoggedIn }, process.env.JWT_KEY);
 
