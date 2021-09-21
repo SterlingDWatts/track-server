@@ -32,7 +32,7 @@ router.post("/poker/stories", async (req, res) => {
 
   const twelveHoursAgo = new Date();
   twelveHoursAgo.setHours(twelveHoursAgo.getHours() - 12);
-  const recentStories = await PokerStory.find({ dateAdded: { $gt: twelveHoursAgo } });
+  const recentStories = await PokerStory.find({ dateAdded: { $gt: twelveHoursAgo } }).sort({ position: "asc" });
 
   res.status(201).send({ stories: recentStories });
 });
